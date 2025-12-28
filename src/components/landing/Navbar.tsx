@@ -103,7 +103,7 @@ export function Navbar() {
                   {link.name}
                 </a>
               ))}
-              <Button className="w-full mt-4 rounded-full">Start a Project</Button>
+              <Button className="w-full mt-4 rounded-full">Schedule A Call </Button>
             </div>
           </motion.div>
         )}

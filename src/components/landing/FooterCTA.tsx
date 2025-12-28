@@ -31,60 +31,7 @@ export function FooterCTA() {
 
   return (
     <footer ref={containerRef}>
-      {/* CTA Section */}
-      <section className="section-padding bg-white text-background relative overflow-hidden">
-        {/* Background decorations */}
-        <motion.div
-          className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl"
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.2, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-
-        <div className="container-wide relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-black mb-6">
-              Let's Build{" "}
-              <span className="text-primary">Together</span>
-            </h2>
-            <p className="text-lg sm:text-xl text-black mb-10 max-w-2xl mx-auto">
-              Ready to transform your ideas into powerful digital solutions? 
-              Let's start a conversation about your next project.
-            </p>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Button
-                size="lg"
-                className="group rounded-full px-10 py-7 text-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25"
-              >
-                Start a Project
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-full text-black px-10 py-7 text-lg font-medium border-background/30 bg-black text-background transition-all duration-300"
-              >
-                Schedule a Call
-              </Button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+      
 
       {/* Footer Links */}
       <div className="bg-foreground text-background border-t border-background/10">

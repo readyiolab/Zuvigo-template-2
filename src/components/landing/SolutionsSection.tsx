@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Globe, Zap, TrendingUp, BarChart3, Check } from "lucide-react";
+import { Globe, Zap, TrendingUp, BarChart3, Check, Dot, Circle } from "lucide-react";
 
 const solutions = [
   {
@@ -114,7 +114,7 @@ export function SolutionsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-4xl mx-auto mb-20">
-          <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Solutions</span>
+
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mt-4 mb-6">
             Solutions Designed for Every Stage of Growth
           </h2>
@@ -171,13 +171,17 @@ function SolutionBlock({ solution, index }) {
                   {service.description}
                 </p>
                 <ul className="grid sm:grid-cols-2 gap-2">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm text-gray-700">
-                      <Check className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+  {service.features.map((feature) => (
+    <li
+      key={feature}
+      className="flex items-center gap-2 text-sm text-gray-700"
+    >
+      <Circle className="w-1.5 h-1.5 text-blue-600 fill-blue-600 flex-shrink-0" />
+      <span className="leading-tight">{feature}</span>
+    </li>
+  ))}
+</ul>
+
               </div>
             ))}
           </div>

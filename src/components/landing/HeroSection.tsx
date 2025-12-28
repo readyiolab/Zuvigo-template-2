@@ -61,7 +61,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] text-foreground mb-6"
+              className="text-4xl sm:text-4xl lg:text-5xl xl:text-6xl font-display font-bold leading-[1.1] text-foreground mb-6"
             >
               We Don't Just Build Websites.
               <br />
@@ -106,24 +106,7 @@ export function HeroSection() {
               </Button>
             </motion.div>
 
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap gap-8 mt-14 pt-8 border-t border-border"
-            >
-              {[
-                { value: "50+", label: "Projects Delivered" },
-                { value: "98%", label: "Client Satisfaction" },
-                { value: "5+", label: "Years Experience" },
-              ].map((stat, i) => (
-                <div key={i} className="text-left">
-                  <div className="text-3xl font-display font-bold text-foreground">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
+            
           </motion.div>
 
           {/* Right Content - Device Mockups */}

@@ -5,6 +5,7 @@ import { SolutionsSection } from "@/components/landing/SolutionsSection";
 import { SelectedWorkSection } from "@/components/landing/SelectedWorkSection";
 import { AnalyticsSection } from "@/components/landing/AnalyticsSection";
 import { FooterCTA } from "@/components/landing/FooterCTA";
+import CTA from "@/components/landing/CTA";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
         <SolutionsSection />
         <SelectedWorkSection />
         {/* <AnalyticsSection /> */}
+        <CTA/>
       </main>
       <FooterCTA />
     </div>
