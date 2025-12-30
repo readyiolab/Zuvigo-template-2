@@ -33,7 +33,7 @@ const Process = () => {
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="text-indigo-600 text-sm font-semibold tracking-wider uppercase">Our Process</span>
+        
           <h2 className="text-3xl md:text-5xl font-bold mt-4 mb-6 text-slate-900">How We Build</h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg">
             A proven methodology that transforms your ideas into successful digital products.
