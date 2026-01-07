@@ -49,17 +49,29 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
-              >
-                {link.name}
-              </motion.a>
-            ))}
+            {navLinks.map((link) => {
+              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                e.preventDefault();
+                const hash = link.href.replace("#", "");
+                const element = document.getElementById(hash);
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              };
+              
+              return (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  onClick={handleClick}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium cursor-pointer"
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {link.name}
+                </motion.a>
+              );
+            })}
           </div>
 
           {/* CTA Button */}
@@ -93,16 +105,31 @@ export function Navbar() {
             className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
           >
             <div className="container-wide py-6 space-y-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="block text-foreground hover:text-primary transition-colors text-lg font-medium py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(false);
+                  const hash = link.href.replace("#", "");
+                  const element = document.getElementById(hash);
+                  if (element) {
+                    // Small delay to allow menu to close first
+                    setTimeout(() => {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 100);
+                  }
+                };
+                
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={handleClick}
+                    className="block text-foreground hover:text-primary transition-colors text-lg font-medium py-2 cursor-pointer"
+                  >
+                    {link.name}
+                  </a>
+                );
+              })}
               <Button className="w-full mt-4 rounded-full">Schedule A Call </Button>
             </div>
           </motion.div>

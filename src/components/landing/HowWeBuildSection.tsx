@@ -29,7 +29,7 @@ const processes = [
 
 const Process = () => {
   return (
-    <section id="process" className="py-24 relative bg-white">
+    <section id="how-we-build" className="py-24 relative bg-white">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Section Header */}
         <div className="text-center mb-16">

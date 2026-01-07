@@ -1,34 +1,50 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { ExternalLink, ChevronRight } from "lucide-react";
+import { AspectRatio } from "../ui/aspect-ratio";
 
 const projects = [
   {
-    id: "arbilo",
-    title: "Arbilo",
-    category: "FinTech Platform",
-    description: "A comprehensive financial analytics platform enabling real-time market insights and automated trading strategies.",
-    results: ["200% increase in user engagement", "50K+ active users", "99.9% uptime"],
-    tags: ["Web App", "Analytics", "AI Integration"],
-    gradient: "from-blue-600 to-indigo-600",
-  },
-  {
-    id: "singhkarman",
-    title: "SinghKarman",
-    category: "E-commerce",
-    description: "Premium e-commerce platform with custom inventory management and seamless checkout experience.",
-    results: ["150% revenue growth", "40% faster load times", "3x conversion rate"],
-    tags: ["E-commerce", "UI/UX", "Performance"],
-    gradient: "from-amber-500 to-orange-600",
-  },
-  {
     id: "igrowbig",
     title: "iGrowBig",
-    category: "EdTech Platform",
-    description: "An innovative learning platform connecting students with mentors through AI-powered matching.",
-    results: ["10K+ students enrolled", "95% satisfaction rate", "500+ mentors"],
-    tags: ["Platform", "AI", "Mobile App"],
-    gradient: "from-emerald-500 to-teal-600",
+    category: "Digital Platform",
+    description: "A growth-focused digital platform built for NHT Global distributors to launch, automate, and scale their business globally  without any technical skills.",
+    results: [
+      "Ready to use business website for NHT Global ",
+      "Lead capture, lead sales-ready product system",
+      "Tools to grow, train your global network"
+    ],
+    tags: ["Platform", "Automation", "MLM"],
+    image: "/igrowbig.png",
+    link: "https://igrowbig.com/",
+  },
+  {
+    id: "arbilo",
+    title: "Arbilo",
+    category: "Crypto Platform",
+    description: "A powerful crypto arbitrage platform powered by the world's first pair-based arbitrage algorithm — giving traders profitable signals with unmatched accuracy.",
+    results: [
+      "Real-time arbitrage signals every 5 minutes",
+      "Unique pair-based algorithm for higher profits",
+      "Track price gaps & trading cycles across exchanges"
+    ],
+    tags: ["Crypto", "Trading", "Analytics"],
+    image: "/arbiloprojct.png",
+    link: "https://arbilo.com/",
+  },
+  {
+    id: "empowerlife",
+    title: "Empower Life",
+    category: "Financial Advisory",
+    description: "A purpose-driven financial advisory website helping families protect, grow, and transfer wealth through clear strategy and trusted guidance.",
+    results: [
+      "Conversion-focused financial services landing page",
+      "Trust-driven UI with metrics & education blocks",
+      "Scalable design built for long-term advisory "
+    ],
+    tags: ["Finance", "Advisory", "Landing Page"],
+    image: "/singhkarman.png",
+    link: "https://singhkarman.com/",
   },
 ];
 
@@ -53,94 +69,99 @@ export function SelectedWorkSection() {
               Selected Work
             </h2>
           </div>
-          <motion.a
-            href="#"
-            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all duration-300"
-            whileHover={{ x: 5 }}
-          >
-            View All Projects
-            <ChevronRight className="w-4 h-4" />
-          </motion.a>
+        
+         
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 * index }}
-              className="group relative"
+              className="group relative h-full"
               onMouseEnter={() => setHoveredId(project.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
-              <div className="relative overflow-hidden rounded-2xl bg-background border border-border transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5">
-                {/* Project Image/Gradient */}
-                <div className={`aspect-[4/3] bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-t from-foreground/80 to-transparent"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: hoveredId === project.id ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  
-                  {/* Hover content */}
-                  <motion.div
-                    className="absolute inset-0 p-6 flex flex-col justify-end"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ 
-                      opacity: hoveredId === project.id ? 1 : 0,
-                      y: hoveredId === project.id ? 0 : 20
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <p className="text-primary-foreground text-sm mb-4">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 rounded-full bg-background/20 backdrop-blur-sm text-primary-foreground text-xs"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+              <a 
+                href={project.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block h-full"
+              >
+                <div className="relative overflow-hidden rounded-2xl bg-background border border-border transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 h-full flex flex-col">
+                  {/* Project Media (fixed aspect ratio for equal heights) */}
+                  <AspectRatio ratio={16/10}>
+                    <div className="relative w-full h-full overflow-hidden bg-muted">
+                      <img 
+                        src={project.image} 
+                        alt={project.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/50 to-transparent"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: hoveredId === project.id ? 1 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                      {/* Hover content */}
+                      <motion.div
+                        className="absolute inset-0 p-6 flex flex-col justify-end"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ 
+                          opacity: hoveredId === project.id ? 1 : 0,
+                          y: hoveredId === project.id ? 0 : 20
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <p className="text-primary-foreground text-sm mb-4">{project.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-3 py-1 rounded-full bg-background/20 backdrop-blur-sm text-primary-foreground text-xs"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </motion.div>
+                      {/* View button */}
+                      <motion.div
+                        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center text-foreground"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ 
+                          opacity: hoveredId === project.id ? 1 : 0,
+                          scale: hoveredId === project.id ? 1 : 0.8
+                        }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </motion.div>
                     </div>
-                  </motion.div>
+                  </AspectRatio>
 
-                  {/* View button */}
-                  <motion.button
-                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center text-foreground"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ 
-                      opacity: hoveredId === project.id ? 1 : 0,
-                      scale: hoveredId === project.id ? 1 : 0.8
-                    }}
-                    transition={{ duration: 0.2 }}
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                  </motion.button>
+                  {/* Content */}
+                  <div className="p-6">
+                    <span className="text-sm text-primary font-medium">{project.category}</span>
+                    <h3 className="text-xl font-display font-semibold text-foreground mt-1 mb-4 group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                    
+                    {/* Results */}
+                    <ul className="space-y-2">
+                      {project.results.map((result) => (
+                        <li key={result} className="flex items-start text-sm text-muted-foreground">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mr-3 mt-1.5 flex-shrink-0" />
+                          {result}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <span className="text-sm text-primary font-medium">{project.category}</span>
-                  <h3 className="text-xl font-display font-semibold text-foreground mt-1 mb-4 group-hover:text-primary transition-colors">
-                    {project.title}
-                  </h3>
-                  
-                  {/* Results */}
-                  <ul className="space-y-2">
-                    {project.results.map((result) => (
-                      <li key={result} className="flex items-center text-sm text-muted-foreground">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary mr-3" />
-                        {result}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              </a>
             </motion.article>
           ))}
         </div>

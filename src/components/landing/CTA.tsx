@@ -1,17 +1,20 @@
-import { ArrowRight, Mail, User, MessageSquare } from 'lucide-react';
+import { ArrowRight, Mail, User, MessageSquare, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
+import { toast } from '@/hooks/use-toast';
 
 const CTA = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    service: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -19,12 +22,46 @@ const CTA = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Lead form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      // Determine backend URL based on environment
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      
+      const response = await fetch(`${backendUrl}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit form');
+      }
+
+      // Show success message
+      toast({
+        title: 'Success!',
+        description: 'Your message has been sent successfully. We\'ll get back to you soon.',
+      });
+
+      // Reset form
+      setFormData({ name: '', email: '', service: '', message: '' });
+    } catch (error) {
+      // Show error message
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to submit form. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -82,11 +119,11 @@ const CTA = () => {
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="name"
+                  placeholder="Your name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500 "
+                  className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500"
                 />
               </div>
 
@@ -100,12 +137,34 @@ const CTA = () => {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="example@example.com"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="bg-white border-slate-300  "
+                  className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500"
                 />
+              </div>
+
+              {/* Service Field */}
+              <div className="space-y-2">
+                <label htmlFor="service" className="text-sm font-medium text-slate-800 flex items-center gap-2">
+                  <Briefcase className="w-4 h-4 text-black" />
+                  Service Interested In
+                </label>
+                <select
+                  id="service"
+                  name="service"
+                  value={formData.service}
+                  onChange={handleChange}
+                  className="w-full h-10 px-3 rounded-md border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                >
+                  <option value="">Select a service</option>
+                  <option value="Build & Presence">Build & Presence</option>
+                  <option value="Automate & Scale">Automate & Scale</option>
+                  <option value="Engage & Grow">Engage & Grow</option>
+                  <option value="Analytics & Insights">Analytics & Insights</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               {/* Message Field */}
@@ -121,7 +180,7 @@ const CTA = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500  min-h-32 resize-none"
+                  className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500 min-h-32 resize-none"
                 />
               </div>
 
@@ -129,10 +188,11 @@ const CTA = () => {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-primary  hover:text-white transition-all duration-300"
+                className="w-full bg-primary hover:text-white transition-all duration-300"
+                disabled={isSubmitting}
               >
-                Send Message
-                <ArrowRight className="ml-2 w-4 h-4" />
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {!isSubmitting && <ArrowRight className="ml-2 w-4 h-4" />}
               </Button>
 
               <p className="text-xs text-slate-600 font-bold text-center">

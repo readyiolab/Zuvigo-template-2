@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Mail, Linkedin, Twitter, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const socialLinks = [
   { icon: Linkedin, href: "#", label: "LinkedIn" },
@@ -13,17 +14,29 @@ const socialLinks = [
 const footerLinks = [
   {
     title: "Company",
-    links: ["About", "Careers", "Blog", "Press"],
+    links: [
+      { label: "About", href: "/" },
+      
+    ],
   },
   {
     title: "Services",
-    links: ["Strategy", "Development", "Design", "Growth"],
+    links: [
+      { label: "Strategy", href: "/#solutions" },
+      { label: "Development", href: "/#solutions" },
+      { label: "Design", href: "/#solutions" },
+      { label: "Growth", href: "/#solutions" },
+    ],
   },
   {
     title: "Resources",
-    links: ["Case Studies", "Documentation", "Privacy", "Terms"],
+    links: [
+      
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+    ],
   },
-];
+] as const;
 
 export function FooterCTA() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -63,6 +76,14 @@ export function FooterCTA() {
                   </motion.a>
                 ))}
               </div>
+              <div className="mt-4">
+                <a
+                  href="mailto:hello@zuvigo.com"
+                  className="text-background/80 hover:text-primary transition-colors underline underline-offset-4"
+                >
+                  hello@zuvigo.com
+                </a>
+              </div>
             </div>
 
             {/* Links */}
@@ -70,16 +91,52 @@ export function FooterCTA() {
               <div key={group.title}>
                 <h4 className="font-display font-semibold mb-4">{group.title}</h4>
                 <ul className="space-y-3">
-                  {group.links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="text-background/60 hover:text-primary transition-colors"
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
+                  {group.links.map((link) => {
+                    const isHashLink = link.href.includes("#");
+                    const isInternal = link.href.startsWith("/") && !link.href.startsWith("/http");
+                    
+                    // Handle hash links with smooth scroll
+                    const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                      if (isHashLink) {
+                        e.preventDefault();
+                        const [path, hash] = link.href.split("#");
+                        
+                        // If not on home page, navigate first
+                        if (window.location.pathname !== "/" && path === "/") {
+                          window.location.href = link.href;
+                          return;
+                        }
+                        
+                        // Scroll to element
+                        const element = document.getElementById(hash);
+                        if (element) {
+                          element.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }
+                      }
+                    };
+                    
+                    return (
+                      <li key={link.label}>
+                        {isInternal && !isHashLink ? (
+                          <Link to={link.href} className="text-background/60 hover:text-primary transition-colors">
+                            {link.label}
+                          </Link>
+                        ) : isHashLink ? (
+                          <a 
+                            href={link.href} 
+                            onClick={handleHashClick}
+                            className="text-background/60 hover:text-primary transition-colors cursor-pointer"
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <a href={link.href} className="text-background/60 hover:text-primary transition-colors">
+                            {link.label}
+                          </a>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
